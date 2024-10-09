@@ -41,6 +41,10 @@ if [ -z "$bashrc_path" ]; then
         read -p "Should I add cushel to .bashrc? (y/n): " response
         if [[ "$response" == "y" ]]; then
             bashrc_path="$HOME/.bashrc"
+            # Create a backup of .bashrc before making any changes
+            backup_path="${bashrc_path}.bak_$(date +%Y%m%d_%H%M%S)"
+            cp "$bashrc_path" "$backup_path"
+            echo "Backup of .bashrc created at $backup_path"
         fi
     elif [ -f "$HOME/.bash_profile" ]; then
         read -p "No .bashrc found. Should I add cushel to .bash_profile? If you respond with 'n' you will be presented with the option of adding cushel to a newly created .bashrc which will be sourced from .bash_profile : " response
@@ -74,10 +78,6 @@ else
     fi
 fi
 
-# Create a backup of .bashrc before making any changes
-backup_path="${bashrc_path}.bak_$(date +%Y%m%d_%H%M%S)"
-cp "$bashrc_path" "$backup_path"
-echo "Backup of .bashrc created at $backup_path"
 
 # Add cushel to the selected file
 add_cushel_to_file "$bashrc_path"
