@@ -43,7 +43,7 @@ if [ -z "$bashrc_path" ]; then
             bashrc_path="$HOME/.bashrc"
         fi
     elif [ -f "$HOME/.bash_profile" ]; then
-        read -p "Should I add cushel to .bash_profile? (y/n): " response
+        read -p "No .bashrc found. Should I add cushel to .bash_profile? If you respond with 'n' you will be presented with the option of adding cushel to a newly created .bashrc which will be sourced from .bash_profile : " response
         if [[ "$response" == "y" ]]; then
             bashrc_path="$HOME/.bash_profile"
         else
