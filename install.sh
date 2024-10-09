@@ -13,13 +13,7 @@ if [ ! -f "$cushel_path" ]; then
 fi
 
 # Allow user to provide a custom .bashrc path, default to ~/.bashrc if not provided
-bashrc_path="${1:-$HOME/.bashrc}"
-
-# Check if the provided .bashrc file exists
-if [ ! -f "$bashrc_path" ]; then
-    echo "Error: .bashrc file does not exist at $bashrc_path"
-    exit 1
-fi
+bashrc_path="${1:-}"
 
 # Create a backup of .bashrc before making any changes
 backup_path="${bashrc_path}.bak_$(date +%Y%m%d_%H%M%S)"
@@ -45,7 +39,6 @@ fi
         echo "The cushel setup is already present in $file_path. If you don't see expected changes, you might have forgotten to activate the settings. To do so, please restart your terminal or run 'source $file_path' and the changes should be applied."
     fi
 }
-
 
 # If no custom .bashrc path is provided
 if [ -z "$bashrc_path" ]; then
@@ -78,8 +71,13 @@ if [ -z "$bashrc_path" ]; then
             exit 0
         fi
     fi
+else
+    # Check if the provided .bashrc file exists
+    if [ ! -f "$bashrc_path" ]; then
+        echo "Error: Provided .bashrc file does not exist at $bashrc_path"
+        exit 1
+    fi
 fi
-
 
 # Add cushel to the selected file
 add_cushel_to_file "$bashrc_path"
