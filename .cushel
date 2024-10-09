@@ -1,0 +1,46 @@
+# alias to watch slurm jobs
+alias sqa='watch -n 1 "squeue -a"'
+
+catless() {
+    # Usage: catless [--last|-l PREFIX]
+    #
+    # Displays the contents of a file using 'less'.
+    #
+    # If the argument '--last' or '-l' is provided, it looks for the most 
+    # recently modified file starting with the specified PREFIX and displays 
+    # its contents using 'less'.
+    #
+    # Parameters:
+    #   --last, -l : Optional. If provided, the next argument should be the 
+    #                prefix of the files to search for (e.g., "out" to find 
+    #                the most recent file starting with "out-").
+    #   PREFIX      : The name of the file to display with 'less'. This 
+    #                 argument is ignored if '--last' or '-l' is used.
+    #
+    # Returns:
+    #   Displays the contents of the specified file or the most recent file
+    #   matching the prefix. If no matching file is found, a message is printed.
+
+    if [ "$1" == "--last" ] || [ "$1" == "-l" ]; then
+        # Shift the arguments to get rid of "--last"
+        shift
+        
+        # Use the remaining argument as the prefix (e.g., "out")
+        local prefix="$1"
+        
+        # Find the most recent file starting with the prefix
+        local file=$(ls -t "${prefix}"* 2>/dev/null | head -n 1)
+        
+        # Check if a file was found
+        if [ -z "$file" ]; then
+            echo "No files found starting with '$prefix'."
+            return 1
+        fi
+        
+        # Display the file with 'less'
+        cat "$file" | less
+    else
+        # If no "--last" argument, just use regular cat behavior with the less argument
+        cat "$1" | less
+    fi
+}
