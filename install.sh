@@ -15,11 +15,6 @@ fi
 # Allow user to provide a custom .bashrc path, default to ~/.bashrc if not provided
 bashrc_path="${1:-}"
 
-# Create a backup of .bashrc before making any changes
-backup_path="${bashrc_path}.bak_$(date +%Y%m%d_%H%M%S)"
-cp "$bashrc_path" "$backup_path"
-echo "Backup of .bashrc created at $backup_path"
-
 # Function to add cushel to a given file
 add_cushel_to_file() {
     local file_path="$1"
@@ -78,6 +73,11 @@ else
         exit 1
     fi
 fi
+
+# Create a backup of .bashrc before making any changes
+backup_path="${bashrc_path}.bak_$(date +%Y%m%d_%H%M%S)"
+cp "$bashrc_path" "$backup_path"
+echo "Backup of .bashrc created at $backup_path"
 
 # Add cushel to the selected file
 add_cushel_to_file "$bashrc_path"
