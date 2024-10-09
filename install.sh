@@ -75,6 +75,10 @@ else
     if [ ! -f "$bashrc_path" ]; then
         echo "Error: Provided .bashrc file does not exist at $bashrc_path"
         exit 1
+    else
+        backup_path="${bashrc_path}.bak_$(date +%Y%m%d_%H%M%S)"
+        cp "$bashrc_path" "$backup_path"
+        echo "Backup of .bashrc created at $backup_path"
     fi
 fi
 
