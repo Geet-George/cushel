@@ -23,13 +23,15 @@ To install cushel, follow these steps:
     cd <repository-directory>
     ```
 
-2. **Run the Installation Script:** Execute the provided installation script to add the necessary lines to your `.bashrc`:
+2. **Run the Installation Script:** Execute the provided installation script and follow the instruction in the terminal to add the necessary lines to your `.bashrc` / `.bash_profile`.:
 
     ```bash
     ./install_cushel.sh
     ```
 
-    Optionally, provide a custom path to your `.bashrc`:
+    The script will automatically detect your `.bashrc` file and add the necessary lines to it. If no `.bashrc` file is found, the script will ask if you would like to add cushel to your `.bash_profile` instead. If you choose to add cushel to `.bash_profile`, the script will add the necessary lines to it. Otherwise, it will ask you if the script should create a new `.bashrc` file for you, add lines to it, and source it from your `.bash_profile`. If you choose no, the script will exit.
+
+    Optionally, you can provide a custom path to your `.bashrc`:
 
     ```bash
     ./install_cushel.sh /path/to/custom/.bashrc
@@ -41,9 +43,16 @@ To install cushel, follow these steps:
     source ~/.bashrc
     ```
 
+    If you chose to add cushel to `.bash_profile`, run:
+
+    ```bash
+    source ~/.bash_profile
+    ```
+
+
 ## Backup
 
-The installation script automatically create backups of your `.bashrc` file to prevent any messup of your bash configurations. Backups are saved as `~/.bashrc.bak_YYYYMMDD_HHMMSS`.
+If an existing `.bashrc` file is found or if the provided `.bashrc` file is found, the installation script automatically creates backups of your `.bashrc` file to prevent any messup of your bash configurations. Backups are saved as `~/.bashrc.bak_YYYYMMDD_HHMMSS` in the default case or as `/custom/path/.bashrc.bak_YYYYMMDD_HHMMSS` if a custom path is provided.
 
 ## Current Functions and Aliases
 
