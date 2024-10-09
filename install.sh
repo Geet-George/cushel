@@ -46,5 +46,40 @@ fi
     fi
 }
 
+
+# If no custom .bashrc path is provided
+if [ -z "$bashrc_path" ]; then
+    if [ -f "$HOME/.bashrc" ]; then
+        read -p "Should I add cushel to .bashrc? (y/n): " response
+        if [[ "$response" == "y" ]]; then
+            bashrc_path="$HOME/.bashrc"
+        fi
+    elif [ -f "$HOME/.bash_profile" ]; then
+        read -p "Should I add cushel to .bash_profile? (y/n): " response
+        if [[ "$response" == "y" ]]; then
+            bashrc_path="$HOME/.bash_profile"
+        else
+            read -p "Should I create a .bashrc, add cushel to it, and source it from .bash_profile? (y/n): " response
+            if [[ "$response" == "y" ]]; then
+                bashrc_path="$HOME/.bashrc"
+                echo "source ~/.bashrc" >> "$HOME/.bash_profile"
+                echo "Added 'source ~/.bashrc' to .bash_profile"
+            else
+                echo "No changes made."
+                exit 0
+            fi
+        fi
+    else
+        read -p "No .bashrc or .bash_profile found. Should I create a .bashrc and add cushel to it? (y/n): " response
+        if [[ "$response" == "y" ]]; then
+            bashrc_path="$HOME/.bashrc"
+        else
+            echo "No changes made."
+            exit 0
+        fi
+    fi
+fi
+
+
 # Add cushel to the selected file
 add_cushel_to_file "$bashrc_path"
